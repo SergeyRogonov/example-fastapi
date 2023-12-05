@@ -1,0 +1,27 @@
+services:
+  postgresdb:
+    image: postgres:14.10
+    environment:
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+  api:
+    build: .
+    ports:
+      - "80:8000"
+    environment:
+      - DBNAME=${DATABASE_NAME}
+      - DBUSER=${DATABASE_USERNAME}
+      - DBPASS=${DATABASE_PASSWORD}
+      - DBPORT=${DATABASE_PORT}
+      - DBHOST=${DATABASE_HOSTNAME}
+      - SECRET_KEY=${SECRET_KEY}
+      - ALGORITHM=${ALGORITHM}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES}
+    depends_on:
+      - postgresdb
+volumes:
+  postgres-db:
+  
+  
