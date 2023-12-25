@@ -1,5 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
-from pydantic.dataclasses import dataclass
+from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from datetime import datetime
 from typing import Optional, Annotated
 
@@ -12,8 +11,8 @@ class UserCreate(UserBase):
     password: str
 
 
-@dataclass(config=dict(from_attributes=True))
 class User(UserBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     created_at: datetime
 
@@ -32,8 +31,8 @@ class PostUpdate(PostBase):
     pass
 
 
-@dataclass(config=dict(from_attributes=True))
 class Post(PostBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
     created_at: datetime
     owner_id: int
